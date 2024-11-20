@@ -1,0 +1,199 @@
+about:
+  date: November 20, 2024 04:27:09
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+entities:
+  Person:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: email
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Stores information about people with whom wine was shared.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Stores information about people with whom wine was shared.
+    label: Person
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - person_id
+      name: TastingSessionList
+      resource: TastingSession
+    type: Person
+  TastingSession:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: person_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: wine_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: tasting_date
+      required: true
+      type: DATE
+    description: Tracks tasting sessions where wines are sampled with people.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Tracks tasting sessions where wines are sampled with people.
+    label: TastingSession
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - person_id
+      name: person
+      resource: Person
+    - direction: toone
+      fks:
+      - wine_id
+      name: wine
+      resource: Wine
+    type: TastingSession
+  Wine:
+    columns:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+      template: text
+      type: VARCHAR
+    - name: vintage
+      template: integer
+      type: INTEGER
+    - name: grape_variety
+      template: text
+      type: VARCHAR
+    - name: region
+      template: text
+      type: VARCHAR
+    - name: id
+      template: integer
+      type: INTEGER
+    description: Stores information about different wines tasted.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: name
+    hidden: {}
+    home_template: home_template.html
+    info_list: Stores information about different wines tasted.
+    label: Wine
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: tomany
+      fks:
+      - wine_id
+      name: TastingSessionList
+      resource: TastingSession
+    - direction: tomany
+      fks:
+      - wine_id
+      name: WineReviewList
+      resource: WineReview
+    type: Wine
+  WineReview:
+    columns:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+      template: integer
+      type: INTEGER
+    - name: wine_id
+      required: true
+      template: integer
+      type: INTEGER
+    - name: review_date
+      required: true
+      type: DATE
+    - name: rating
+      template: integer
+      type: INTEGER
+    - name: notes
+      template: text
+      type: VARCHAR
+    description: Stores detailed reviews for wines, including ratings and tasting
+      notes.
+    detail_template: detail_template.html
+    exclude: 'false'
+    favorite: id
+    hidden: {}
+    home_template: home_template.html
+    info_list: Stores detailed reviews for wines, including ratings and tasting notes.
+    label: WineReview
+    mode: tab
+    new_template: new_template.html
+    primary_key:
+    - id
+    tab_groups:
+    - direction: toone
+      fks:
+      - wine_id
+      name: wine
+      resource: Wine
+    type: WineReview
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: false
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    mode: tab
+    pick_style: list
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: false

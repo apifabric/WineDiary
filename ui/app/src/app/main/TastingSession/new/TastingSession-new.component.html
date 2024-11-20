@@ -1,0 +1,56 @@
+<o-form #TastingSessionForm attr="TastingSession_form_insert" service="TastingSession" entity="TastingSession" 
+keys="id" fxLayout="column" show-header="yes" header-actions="I"
+horizontal-scroll="yes"
+after-insert-mode="new" class="standalone-form-container" (onInsertMode)="onInsertMode()">
+
+<o-row attr="row1" layout-align="start stretch">
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+    
+        <o-integer-input #id attr="id" label=" id*" type="integer" editable="no" required="no" ></o-integer-input>
+      
+        <o-list-picker 
+        attr="person_id"
+        service="Person" 
+        entity="PersonType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="id" 
+        value-column-type="INTEGER"  
+        keys="id" 
+        columns="id;person_id;name" 
+        title="person_id"
+        visible-columns="id;name" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+        <o-list-picker 
+        attr="wine_id"
+        service="Wine" 
+        entity="WineType"
+        fxFlex="30" 
+        query-on-init="no" 
+        query-on-bind="yes" 
+        required="yes" 
+        enabled="yes" 
+        filter="yes"
+        value-column="id" 
+        value-column-type="INTEGER"  
+        keys="id" 
+        columns="id;wine_id;name" 
+        title="wine_id"
+        visible-columns="id;name" 
+        separator=" - " width="680px" class="form-field">
+</o-list-picker>
+      
+        <o-date-input #tasting_date attr="tasting_date" type="date" label="tasting_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+      
+</div>
+</o-row>
+
+<div layout-padding></div>
+
+</o-form>

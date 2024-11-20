@@ -1,0 +1,139 @@
+about:
+  date: November 20, 2024 04:27:09
+  recent_changes: works with modified safrs-react-admin
+  version: 0.0.0
+api_root: '{http_type}://{swagger_host}:{port}/{api}'
+authentication: '{system-default}'
+info:
+  number_relationships: 3
+  number_tables: 4
+info_toggle_checked: true
+resources:
+  Person:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: email
+    - name: id
+    description: Stores information about people with whom wine was shared.
+    info_list: Stores information about people with whom wine was shared.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - person_id
+      name: TastingSessionList
+      resource: TastingSession
+    type: Person
+    user_key: name
+  TastingSession:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: person_id
+      required: true
+    - name: wine_id
+      required: true
+    - name: tasting_date
+      required: true
+      type: DATE
+    description: Tracks tasting sessions where wines are sampled with people.
+    info_list: Tracks tasting sessions where wines are sampled with people.
+    tab_groups:
+    - direction: toone
+      fks:
+      - person_id
+      name: person
+      resource: Person
+    - direction: toone
+      fks:
+      - wine_id
+      name: wine
+      resource: Wine
+    type: TastingSession
+    user_key: id
+  Wine:
+    attributes:
+    - label: ' name*'
+      name: name
+      required: true
+      search: true
+      sort: true
+    - name: vintage
+    - name: grape_variety
+    - name: region
+    - name: id
+    description: Stores information about different wines tasted.
+    info_list: Stores information about different wines tasted.
+    tab_groups:
+    - direction: tomany
+      fks:
+      - wine_id
+      name: TastingSessionList
+      resource: TastingSession
+    - direction: tomany
+      fks:
+      - wine_id
+      name: WineReviewList
+      resource: WineReview
+    type: Wine
+    user_key: name
+  WineReview:
+    attributes:
+    - label: ' id*'
+      name: id
+      search: true
+      sort: true
+    - name: wine_id
+      required: true
+    - name: review_date
+      required: true
+      type: DATE
+    - name: rating
+    - name: notes
+    description: Stores detailed reviews for wines, including ratings and tasting
+      notes.
+    info_list: Stores detailed reviews for wines, including ratings and tasting notes.
+    tab_groups:
+    - direction: toone
+      fks:
+      - wine_id
+      name: wine
+      resource: Wine
+    type: WineReview
+    user_key: id
+settings:
+  HomeJS: /admin-app/home.js
+  max_list_columns: 8
+  style_guide:
+    applicationLocales:
+    - en
+    - es
+    currency_symbol: $
+    currency_symbol_position: left
+    date_format: LL
+    decimal_max: '1000000000'
+    decimal_min: '0'
+    decimal_separator: .
+    detail_mode: tab
+    edit_on_mode: dblclick
+    exclude_listpicker: false
+    include_translation: 'false'
+    keycloak_client_id: alsclient
+    keycloak_realm: kcals
+    keycloak_url: http://localhost:8080
+    locale: en
+    max_decimal_digits: '4'
+    min_decimal_digits: '2'
+    new_mode: dialog
+    pick_style: list
+    row_height: small,
+    serviceType: OntimizeEE
+    startSessionPath: /auth/login
+    style: light
+    thousand_separator: ','
+    use_keycloak: 'false'

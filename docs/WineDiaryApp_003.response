@@ -1,0 +1,31 @@
+{
+    "models": [
+        {
+            "classname": "Wine",
+            "code": "class Wine(Base):\n    \"\"\"description: Stores information about different wines tasted.\"\"\"\n    __tablename__ = 'wines'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    vintage = Column(Integer)\n    grape_variety = Column(String)\n    region = Column(String)\n\n    def __repr__(self):\n        return f\"<Wine(name='{self.name}', vintage='{self.vintage}')>\"",
+            "description": "Stores information about different wines tasted.",
+            "name": "Wine"
+        },
+        {
+            "classname": "Person",
+            "code": "class Person(Base):\n    \"\"\"description: Stores information about people with whom wine was shared.\"\"\"\n    __tablename__ = 'people'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    email = Column(String)\n\n    def __repr__(self):\n        return f\"<Person(name='{self.name}', email='{self.email}')>\"",
+            "description": "Stores information about people with whom wine was shared.",
+            "name": "Person"
+        },
+        {
+            "classname": "WineReview",
+            "code": "class WineReview(Base):\n    \"\"\"description: Stores detailed reviews for wines, including ratings and tasting notes.\"\"\"\n    __tablename__ = 'wine_reviews'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    wine_id = Column(Integer, ForeignKey('wines.id'), nullable=False)\n    review_date = Column(Date, nullable=False)\n    rating = Column(Integer)\n    notes = Column(String)\n\n    def __repr__(self):\n        return f\"<WineReview(wine_id='{self.wine_id}', rating='{self.rating}')>\"",
+            "description": "Stores detailed reviews for wines, including ratings and tasting notes.",
+            "name": "WineReview"
+        },
+        {
+            "classname": "TastingSession",
+            "code": "class TastingSession(Base):\n    \"\"\"description: Tracks tasting sessions where wines are sampled with people.\"\"\"\n    __tablename__ = 'tasting_sessions'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    wine_id = Column(Integer, ForeignKey('wines.id'), nullable=False)\n    person_id = Column(Integer, ForeignKey('people.id'), nullable=False)\n    tasting_date = Column(Date, nullable=False)\n\n    def __repr__(self):\n        return f\"<TastingSession(wine_id='{self.wine_id}', person_id='{self.person_id}')>\"",
+            "description": "Tracks tasting sessions where wines are sampled with people.",
+            "name": "TastingSession"
+        }
+    ],
+    "rules": [],
+    "test_data": "from datetime import date\n\n# Test data for Wine\nwine1 = Wine(name=\"Cabernet Sauvignon\", vintage=2015, grape_variety=\"Cabernet Sauvignon\", region=\"Napa Valley\")\nwine2 = Wine(name=\"Merlot\", vintage=2017, grape_variety=\"Merlot\", region=\"Bordeaux\")\nwine3 = Wine(name=\"Pinot Noir\", vintage=2018, grape_variety=\"Pinot Noir\", region=\"Oregon\")\nwine4 = Wine(name=\"Chardonnay\", vintage=2016, grape_variety=\"Chardonnay\", region=\"Sonoma\")\n\n# Test data for Person\nperson1 = Person(name=\"John Doe\", email=\"john.doe@example.com\")\nperson2 = Person(name=\"Jane Smith\", email=\"jane.smith@example.com\")\nperson3 = Person(name=\"Emily Clark\", email=\"emily.clark@example.com\")\nperson4 = Person(name=\"Michael Brown\", email=\"michael.brown@example.com\")\n\n# Test data for WineReview\nreview1 = WineReview(wine_id=1, review_date=date(2023, 1, 15), rating=8, notes=\"Fruity with oakiness\")\nreview2 = WineReview(wine_id=2, review_date=date(2023, 2, 25), rating=7, notes=\"Smooth and rich\")\nreview3 = WineReview(wine_id=3, review_date=date(2023, 3, 10), rating=9, notes=\"Light and floral\")\nreview4 = WineReview(wine_id=4, review_date=date(2023, 4, 20), rating=6, notes=\"Crisp and dry\")\n\n# Test data for TastingSession\ntasting1 = TastingSession(wine_id=1, person_id=1, tasting_date=date(2023, 5, 10))\ntasting2 = TastingSession(wine_id=2, person_id=2, tasting_date=date(2023, 5, 15))\ntasting3 = TastingSession(wine_id=3, person_id=3, tasting_date=date(2023, 5, 20))\ntasting4 = TastingSession(wine_id=4, person_id=4, tasting_date=date(2023, 5, 25))\n",
+    "name": "WineDiary"
+}

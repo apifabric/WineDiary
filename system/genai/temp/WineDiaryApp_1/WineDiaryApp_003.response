@@ -1,0 +1,43 @@
+{
+    "models": [
+        {
+            "classname": "Wine",
+            "code": "class Wine(Base):\n    \"\"\"description: Table for storing details about various wines.\"\"\"\n    __tablename__ = 'wine'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    vintage = Column(Integer, nullable=True)\n    winery = Column(String, nullable=True)\n    varietal = Column(String, nullable=True)\n    country = Column(String, nullable=True)",
+            "description": "Table for storing details about various wines.",
+            "name": "Wine"
+        },
+        {
+            "classname": "Review",
+            "code": "class Review(Base):\n    \"\"\"description: Table for storing details about wine reviews.\"\"\"\n    __tablename__ = 'review'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    wine_id = Column(Integer, ForeignKey('wine.id'), nullable=False)\n    rating = Column(Integer, nullable=False)\n    review_date = Column(DateTime, nullable=False)\n    notes = Column(String, nullable=True)",
+            "description": "Table for storing details about wine reviews.",
+            "name": "Review"
+        },
+        {
+            "classname": "Person",
+            "code": "class Person(Base):\n    \"\"\"description: Table for storing details about people participating in wine tasting.\"\"\"\n    __tablename__ = 'person'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String, nullable=False)\n    email = Column(String, nullable=True)\n    phone = Column(String, nullable=True)",
+            "description": "Table for storing details about people participating in wine tasting.",
+            "name": "Person"
+        },
+        {
+            "classname": "Event",
+            "code": "class Event(Base):\n    \"\"\"description: Table for storing wine tasting events.\"\"\"\n    __tablename__ = 'event'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    event_date = Column(Date, nullable=False)\n    location = Column(String, nullable=True)\n    description = Column(String, nullable=True)",
+            "description": "Table for storing wine tasting events.",
+            "name": "Event"
+        },
+        {
+            "classname": "WineTasting",
+            "code": "class WineTasting(Base):\n    \"\"\"description: Intermediary table linking wine tastings to specific wines.\"\"\"\n    __tablename__ = 'wine_tasting'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    wine_id = Column(Integer, ForeignKey('wine.id'), nullable=False)\n    event_id = Column(Integer, ForeignKey('event.id'), nullable=False)\n    wine_notes = Column(String, nullable=True)",
+            "description": "Intermediary table linking wine tastings to specific wines.",
+            "name": "WineTasting"
+        },
+        {
+            "classname": "Participant",
+            "code": "class Participant(Base):\n    \"\"\"description: Intermediary table linking people to wine tasting events.\"\"\"\n    __tablename__ = 'participant'\n\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    person_id = Column(Integer, ForeignKey('person.id'), nullable=False)\n    event_id = Column(Integer, ForeignKey('event.id'), nullable=False)",
+            "description": "Intermediary table linking people to wine tasting events.",
+            "name": "Participant"
+        }
+    ],
+    "rules": [],
+    "test_data": "from datetime import date, datetime\n\n# Test data for Wine table\nwine1 = Wine(name=\"Chardonnay\", vintage=2018, winery=\"ABC Winery\", varietal=\"Chardonnay\", country=\"USA\")\nwine2 = Wine(name=\"Merlot\", vintage=2016, winery=\"XYZ Vineyards\", varietal=\"Merlot\", country=\"France\")\nwine3 = Wine(name=\"Cabernet Sauvignon\", vintage=2017, winery=\"South Villa\", varietal=\"Cabernet Sauvignon\", country=\"Australia\")\nwine4 = Wine(name=\"Pinot Noir\", vintage=2019, winery=\"RedHill\", varietal=\"Pinot Noir\", country=\"New Zealand\")\n\n# Test data for Review table\nreview1 = Review(wine_id=1, rating=92, review_date=datetime(2023, 10, 20), notes=\"Well-balanced with oak notes.\")\nreview2 = Review(wine_id=2, rating=87, review_date=datetime(2023, 10, 15), notes=\"Fruity with a hint of spice.\")\nreview3 = Review(wine_id=3, rating=90, review_date=datetime(2023, 09, 12), notes=\"Full-bodied and rich.\")\nreview4 = Review(wine_id=4, rating=85, review_date=datetime(2023, 08, 30), notes=\"Light with cherry aromas.\")\n\n# Test data for Person table\nperson1 = Person(name=\"Alice Smith\", email=\"alice@example.com\", phone=\"123-456-7890\")\nperson2 = Person(name=\"Bob Johnson\", email=\"bob@example.com\", phone=\"098-765-4321\")\nperson3 = Person(name=\"Charlie Brown\", email=\"charlie@example.com\", phone=\"456-789-0123\")\nperson4 = Person(name=\"Diana Prince\", email=\"diana@example.com\", phone=\"321-654-0987\")\n\n# Test data for Event table\nevent1 = Event(event_date=date(2023, 10, 22), location=\"Rioja Room\", description=\"Fall wine tasting event.\")\nevent2 = Event(event_date=date(2023, 09, 14), location=\"Napa Hall\", description=\"Annual wine gala.\")\nevent3 = Event(event_date=date(2023, 08, 25), location=\"Bordeaux Base\", description=\"Vintage wine night.\")\nevent4 = Event(event_date=date(2023, 07, 16), location=\"Mosel Lounge\", description=\"Summer wine showcase.\")\n\n# Test data for WineTasting table\nwine_tasting1 = WineTasting(wine_id=1, event_id=1, wine_notes=\"Perfectly chilled.\")\nwine_tasting2 = WineTasting(wine_id=2, event_id=2, wine_notes=\"Paired well with cheese.\")\nwine_tasting3 = WineTasting(wine_id=3, event_id=3, wine_notes=\"Aged beautifully.\")\nwine_tasting4 = WineTasting(wine_id=4, event_id=4, wine_notes=\"Smooth finish.\")\n\n# Test data for Participant table\nparticipant1 = Participant(person_id=1, event_id=1)\nparticipant2 = Participant(person_id=2, event_id=2)\nparticipant3 = Participant(person_id=3, event_id=3)\nparticipant4 = Participant(person_id=4, event_id=4)",
+    "name": "WineDiaryApp"
+}

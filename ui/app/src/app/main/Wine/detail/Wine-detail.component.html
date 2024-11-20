@@ -1,0 +1,141 @@
+<div class="container">
+<o-form-container breadcrumb="yes" breadcrumb-label-columns="name" breadcrumb-separator=", " class="fill-form">
+      <o-form #form attr="Wine_form_edit" 
+        service="Wine" 
+        entity="Wine" 
+        fxLayout="column" 
+        show-header="yes" 
+        header-actions="R;I;U;D"
+        #oDetailForm keys="id" 
+        keys-sql-types="INTEGER" 
+        show-header-navigation="yes"
+        (onDataLoaded)="onDataLoaded($event)">
+
+  <o-row attr="row1" layout-align="start stretch">
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxFlex fxLayoutGap="14px">
+      
+      <o-text-input #name attr="name" label=" name*" enabled="yes" required="yes" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #vintage attr="vintage" label="vintage" type="integer" editable="no" required="no" ></o-integer-input>
+      
+      <o-text-input #grape_variety attr="grape_variety" label="grape_variety" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-text-input #region attr="region" label="region" enabled="yes" required="no" fxFlex="20%" class="form-field"></o-text-input>
+      
+      <o-integer-input #id attr="id" label="id" type="integer" editable="no" required="no" ></o-integer-input>
+      
+    </div>
+  </o-row>
+      
+      <mat-tab-group fxFill>
+        
+        <mat-tab label="TASTINGSESSION-wine_id">
+    <div layout-padding>
+      <o-table 
+        attr="TastingSessionTable" 
+        service="TastingSession" 
+        entity="TastingSession" 
+        keys="id"
+        parent-keys="wine_id:id"
+        columns="id;person_id;wine_id;tasting_date"  
+        horizontal-scroll="yes"
+        detail-form-route="TastingSession" 
+        edit-form-route="TastingSession"
+        visible-columns="id;person_id;wine_id;tasting_date"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="person_id" title="person_id">
+    <o-table-cell-renderer-service attr="person_id" 
+        service="Person" entity="PersonType" columns="id;name"
+        parent-keys="id:person_id"
+        value-column="name" keys="person_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-table-column attr="wine_id" title="wine_id">
+    <o-table-cell-renderer-service attr="wine_id" 
+        service="Wine" entity="WineType" columns="id;name"
+        parent-keys="id:wine_id"
+        value-column="name" keys="wine_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #tasting_date attr="tasting_date" type="date" label="tasting_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+        <mat-tab label="WINEREVIEW-wine_id">
+    <div layout-padding>
+      <o-table 
+        attr="WineReviewTable" 
+        service="WineReview" 
+        entity="WineReview" 
+        keys="id"
+        parent-keys="wine_id:id"
+        columns="id;wine_id;review_date;rating;notes"  
+        horizontal-scroll="yes"
+        detail-form-route="WineReview" 
+        edit-form-route="WineReview"
+        visible-columns="id;wine_id;review_date;rating;notes"  
+        sort-columns="id" 
+        query-rows="25" 
+        quick-filter="yes"
+        row-height="medium" 
+        select-all-checkbox="true" 
+        pageable="yes"  
+        auto-adjust="true" 
+        virtual-scroll="yes" 
+        insert-button="yes" 
+        delete-button="yes" 
+        fixed-header="true" 
+        class="vertical-padding-8"
+        edition-mode="dblclick" 
+        horizontal-scroll="yes" class="fill-form">
+        
+          <o-table-column #id attr="id" title=" id*" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column attr="wine_id" title="wine_id">
+    <o-table-cell-renderer-service attr="wine_id" 
+        service="Wine" entity="WineType" columns="id;name"
+        parent-keys="id:wine_id"
+        value-column="name" keys="wine_id"
+        visible-columns="name" separator=" - " width="680px">
+    </o-table-cell-renderer-service>
+</o-table-column>
+        
+          <o-date-input #review_date attr="review_date" type="date" label="review_date" enabled="yes" required="yes" format="LL" fxFlex="20%" class="form-field"></o-date-input>
+        
+          <o-table-column #rating attr="rating" title="rating" type="integer" editable="no" required="no" content-align="center"></o-table-column>
+        
+          <o-table-column #notes attr="notes" title="notes" editable="no" required="no" content-align="left"></o-table-column>
+        
+        <o-table-paginator page-size-options="25;50;100"></o-table-paginator>
+      </o-table>
+    </div>
+</mat-tab>
+        
+      </mat-tab-group>
+      
+    </o-form>
+  </o-form-container>
+</div>
